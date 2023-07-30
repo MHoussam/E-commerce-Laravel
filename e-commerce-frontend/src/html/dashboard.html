@@ -3,11 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" href="../style/dashboard.css" rel="stylesheet">
         <title>Dashboard</title>
     </head>
     <body>
-        <div class="product-display">
-            
+        <div class="product-display flex-column">
+            <h1 class="products-title flex center">Products</h1>
+
+            <div class="product-cards flex wrap" id="product-cards">
+                <div class="product flex-column">
+                    <div class="product-name flex center bold big" id="product-name">
+                        Bag
+                    </div>
+
+                    <div class="product-content">
+                        <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
+                    </div>
+
+                </div>
+            </div>
         </div>
     </body>
 </html>
