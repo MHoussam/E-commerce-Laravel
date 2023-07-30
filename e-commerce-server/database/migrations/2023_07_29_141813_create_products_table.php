@@ -30,7 +30,7 @@ return new class extends Migration
         Schema::create('products_cart', function (Blueprint $table) {
             $table->id();            
             $table->string('user_id');
-            $table->string('cart_id');
+            $table->string('product_id');
             $table->timestamps();
         });
     }

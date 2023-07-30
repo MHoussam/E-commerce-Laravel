@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Favorite;
+use App\Models\Cart;
 
 class customerController extends Controller
 {
@@ -58,6 +60,24 @@ class customerController extends Controller
     function dashboard() {
         $products = Product::all();
         
+        return json_encode($products);
+    }
+
+    function favorite() {
+        $favorites = Favorite::all();
+        
+        $product_id = $favorites->pluck('product_id');
+        $products = Product::whereIn('id', $product_id)->get();
+
+        return json_encode($products);
+    }
+
+    function cart() {
+        $carts = Cart::all();
+        
+        $product_id = $carts->pluck('product_id');
+        $products = Product::whereIn('id', $product_id)->get();
+
         return json_encode($products);
     }
 }
