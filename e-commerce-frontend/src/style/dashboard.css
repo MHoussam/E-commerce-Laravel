@@ -23,11 +23,15 @@
     font-size: 26px;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 body {
     margin: 0;
 }
 
-.products-title {
+.header {
     background-color: rgb(122, 163, 252);
     margin: 0;
     padding: 1.5% 1%;
@@ -51,6 +55,7 @@ body {
 .product {
     border: 3px solid rgb(207, 117, 32);
     border-radius: 10px;
+    text-decoration: none;
 }
 
 .product-content {
@@ -59,4 +64,24 @@ body {
 
 .product-buttons {
     border-top: 2px solid rgb(207, 117, 32);
+}
+
+.product-list {
+    text-decoration: none;
+}
+
+.title {
+    width: 80%;    
+}
+
+.show {
+    align-items: center;    
+    width: 50%;
+    
+    justify-content: flex-end;
+}
+
+.show-btn {
+    padding: 1%;
+    justify-content: flex-end;
 }

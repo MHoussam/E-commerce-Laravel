@@ -55,14 +55,9 @@ class customerController extends Controller
         return json_encode([$status, $users]);
     }
 
-    function dashboard($email = null) {
-        if($email) {
-            $users = User::where('email', $email)->first();
-        }
-        else {
-            $users = "Fill all the inputs!";
-        }
-
-        return json_encode($users);
+    function dashboard() {
+        $products = Product::all();
+        
+        return json_encode($products);
     }
 }
