@@ -35,6 +35,8 @@ body {
 
 .product-cards {
     padding: 3%;
+    row-gap: 20px;
+    column-gap: 17px;
 }
 
 .pic {
@@ -53,4 +55,8 @@ body {
 
 .product-content {
     padding: 0;
+}
+
+.product-buttons {
+    border-top: 2px solid rgb(207, 117, 32);
 }

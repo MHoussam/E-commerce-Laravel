@@ -16,12 +16,23 @@
                         Bag
                     </div>
 
-                    <div class="product-content">
+                    <div class="product-content flex center">
                         <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
                     </div>
 
+                    <div class="product-buttons">
+                        <button class="favorite" id="favorite">Add to Favorite</button>
+
+                        <button class="cart" id="cart">Add to Cart</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../js/script.js"></script>
+        <script>
+            pages.loadFor("dashboard")
+        </script>  
     </body>
 </html>
