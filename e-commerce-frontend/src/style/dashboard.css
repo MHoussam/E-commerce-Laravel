@@ -1,0 +1,56 @@
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.center {
+    justify-content: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.big {
+    font-size: 26px;
+}
+
+body {
+    margin: 0;
+}
+
+.products-title {
+    background-color: rgb(122, 163, 252);
+    margin: 0;
+    padding: 1.5% 1%;
+}
+
+.product-cards {
+    padding: 3%;
+}
+
+.pic {
+    height: 150px;
+}
+
+.product-name {
+    background-color: beige;
+    border-bottom: 2px solid rgb(207, 117, 32);
+}
+
+.product {
+    border: 3px solid rgb(207, 117, 32);
+    border-radius: 10px;
+}
+
+.product-content {
+    padding: 0;
+}
