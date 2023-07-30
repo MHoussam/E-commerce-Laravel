@@ -80,4 +80,12 @@ class customerController extends Controller
 
         return json_encode($products);
     }
+
+    function product($id) {
+        $products = Product::all();
+        
+        $products = Product::where('id', $id)->first();
+
+        return json_encode($products);
+    }
 }

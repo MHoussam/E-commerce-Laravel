@@ -6,89 +6,56 @@ pages.loadFor = (page) => {
   eval("pages.page_" + page + "();")
 }
 
-pages.print_message = (message) =>{
-  console.log(message);
+pages.goTo = (page) =>{
+  document.getElementById(page).addEventListener("click", async (event) => {
+    window.location.href = "./" + page + ".html";
+  });
 }
 
-pages.page_index = async (event) => {
+pages.page_index = async () => {
     document.getElementById("login").addEventListener("click", async (event) => {
-      //event.preventDefault();
       const index_url = pages.base_url + "login/"
-      const response = await pages.login(index_url, event)
-      //console.log(response.data[0].first_name)
-      //event.preventDefault();
-      //const first_name = response.data[0];
-      
+      await pages.login(index_url, event)
     });
 }
 
-pages.page_register = async (event) => {
+pages.page_register = async () => {
   document.getElementById("register").addEventListener("click", async (event) => {
-    //event.preventDefault();
     const register_url = pages.base_url + "register"
-    const response = await pages.register(register_url, event)
-    //console.log(response.data[0].first_name)
-    //event.preventDefault();
-    //const first_name = response.data[0];
-    
+    await pages.register(register_url, event)    
   });
 }
 
-//const myTimeout = setTimeout(pages.page_dashboard, 5000);
-
-//window.addEventListener("DOMContentLoaded", async() =>{
 pages.page_dashboard = async () => {
-    // document.getElementById("show").addEventListener("click", async (event) => {
-      //event.preventDefault();
-        //("#product"). window (function (e){e.preventDefault(); });
-        //if(localStorage.getItem('status') == 1){
-          //pages.myStopFunction();
           const dashboard_url = pages.base_url + "dashboard"
           const response = await pages.dashboard(dashboard_url)
-          // const name = response.data[1].name;
-          // console.log('name: ' + name)
-          // document.getElementById("products-title").innerHTML = "Hello " + name;
-          ///localStorage.setItem('status', 0);
-        //}
-      //console.log(response.data[0].first_name)
-      //event.preventDefault();
-      //const first_name = response.data[0];
-  // });
 
-  document.getElementById("favorite").addEventListener("click", async (event) => {
-    window.location.href = "./favorite.html";
-  });
-
-  document.getElementById("cart").addEventListener("click", async (event) => {
-    window.location.href = "./cart.html";
-  });
+  pages.goTo('favorite')
+  pages.goTo('cart')
 }
-//});
 
 pages.page_favorite = async () => {
   const favorite_url = pages.base_url + "favorite"
-  const response = await pages.favorite(favorite_url)
+  await pages.dashboard(favorite_url)
         
-  document.getElementById("product").addEventListener("click", async (event) => {
-    window.location.href = "./dashboard.html";
-  });
-
-  document.getElementById("cart").addEventListener("click", async (event) => {
-    window.location.href = "./cart.html";
-  });
+  pages.goTo('dashboard')
+  pages.goTo('cart')
 }
 
 pages.page_cart = async () => {
   const cart_url = pages.base_url + "cart"
-  const response = await pages.cart(cart_url)
+  await pages.dashboard(cart_url)
         
-  document.getElementById("product").addEventListener("click", async (event) => {
-    window.location.href = "./dashboard.html";
-  });
+  pages.goTo('dashboard')
+  pages.goTo('favorite')
+}
 
-  document.getElementById("favorite").addEventListener("click", async (event) => {
-    window.location.href = "./favorite.html";
-  });
+pages.page_product = async () => {
+  const product_url = pages.base_url + "product/" + localStorage.getItem('chosen_product')
+  await pages.product(product_url)
+        
+  pages.goTo('favorite')
+  pages.goTo('cart')
 }
 
 pages.login = async (url,event) => {
@@ -105,73 +72,27 @@ pages.login = async (url,event) => {
           );
         
         console.log('aaaa: ' + response.data[0])
-        //console.log('hmmmm: ' + response.data[1])
+        
         if(response.data[0] != 0) {
           localStorage.setItem('id', response.data[1].id);
           localStorage.setItem('first_name', response.data[1].first_name);
-          //console.log('re: ' + response.data[1])
+          
           console.log(response.data[1].first_name)
           window.location.href = "./src/html/dashboard.html";
         } else {
           console.log("Wrong Credentials!");
         }
-        //api_url = pages.base_url + "dashboard/" + response.data[0].email;
-
-        // try{
-        //   await axios.post(
-        //     api_url
-        //   );
-
-        //   
-        // }catch(error){
-        //   pages.print_message("Error from Linking (POST)" + error)
-        // }
-        //document.getElementById("title").innerHTML = "Hello " + response.data[0].first_name;
-        //console.log(response.data[0].first_name)
     }catch(error){
       console.log("Error from Login API: " + error)
     }
-    
-    // fetch(url + email + "/" + password, {
-    //     method: "GET",
-    //     mode: "cors",
-    //     cache: "no-cache",
-    //     origin: "http://127.0.0.1:8000",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // )
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     //if (response["status"] == "1") {
-    //       console.log("status: " + response.data[0]);
-    //       //console.log("response: " + response.id);
-    //       //localStorage.setItem("id", response.id);
-    //       //console.log("id: " + localStorage.getItem("id"));
-    //       //localStorage.setItem("token_value", response.token_value);
-    //       //console.log(localStorage.getItem("token_value"));
-    //       //window.location.href = "./src/html/classes.html";
-    //     // } else {
-    //     //   console.log(response["message"]);
-    //     // }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
   }
 
 pages.register = async (url) => {
-  // const email = document.getElementById("email").value;
-  // const password = document.getElementById("password").value;
-  //event.preventDefault();
   const first_name = document.getElementById("first_name").value;
   const last_name = document.getElementById("last_name").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  //event.preventDefault();
   localStorage.setItem('id', null);
   localStorage.setItem('first_name', null);
   localStorage.setItem('status', 1);
@@ -191,79 +112,48 @@ pages.register = async (url) => {
           url,
           userData
           ).then(response => {
-            // Handle the response data from the server
             console.log(response.data);
 
             console.log('aaaa: ' + response.data[0])
-            //console.log('hmmmm: ' + response.data[1])
             if(response.data[0] != 0) {
               localStorage.setItem('id', response.data[1].id);
               localStorage.setItem('first_name', response.data[1].first_name);
-              //console.log('re: ' + response.data[1])
               console.log(response.data[1].first_name)
               window.location.href = "./dashboard.html";
             } else {
               console.log("Fill all the inputs!");
             }
           })
-        
-        
-        //api_url = pages.base_url + "dashboard/" + response.data[0].email;
-
-        // try{
-        //   await axios.post(
-        //     api_url
-        //   );
-
-        //   
-        // }catch(error){
-        //   pages.print_message("Error from Linking (POST)" + error)
-        // }
-        //document.getElementById("title").innerHTML = "Hello " + response.data[0].first_name;
-        //console.log(response.data[0].first_name)
     }catch(error){
       console.log("Error from Register API: " + error)
     }
 }
 
-// pages.myStopFunction = () => {
-//   clearTimeout(myTimeout);
-// }
-
 pages.dashboard = async (url) => {
-  //event.preventDefault();
   try{
     const product = await axios(url)    
-
-    //const product = [{"id":1,"name":"Bag","description":"Big Bag","price":"5","quantity":"99","created_at":null,"updated_at":null},{"id":2,"name":"Belt","description":"Leather Belt","price":"80","quantity":"99","created_at":null,"updated_at":null}]
-
     console.log(product.data);
       productsArray = product.data;
-      console.log('heyyyyyy: ')
       console.log('qwas: '+product.data[0].name)
       if(product.data.length != "0"){
-        //console.log(product.data.length)
         console.log("again?")
         pages.displayProducts()
       } else {
         console.log("Couldn't load the products! " + error);
       }
   }catch(error){
-      pages.print_message("Error from dashboard API: " + error)
+    console.log("Error from dashboard API: " + error)
   }
 }
 
 pages.displayProducts = async () => {
-  let count=0;
-  //event.preventDefault();
   const productsList = document.getElementById("product-cards");
   productsList.innerHTML = "";
   productsArray.forEach((product) => {
-  //event.preventDefault();
     const listItem = document.createElement("div");
     console.log(product.name)
     listItem.innerHTML = `
-    <div class="product flex-column">
+    <div class="product flex-column pointer" onclick="pages.chooseProduct(${product.id})">
       <div class="product-name flex center bold big" id="product-name">
         ` + product.name + `
       </div>
@@ -272,137 +162,57 @@ pages.displayProducts = async () => {
         <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
       </div>
 
-      <div class="product-buttons pointer">
-        <button class="favorite pointer" id="favorite">Add to Favorite</button>
-        
-        <button class="cart pointer" id="cart">Add to Cart</button>
+      <div class="product-price flex center">        
+        <div class="price bold" id="price">$` + product.price + `</div>
       </div>
     </div>
     `;
-
-    //console.log(class_student.class_id);
     productsList.appendChild(listItem)
   })
-  //event.preventDefault();
-  //await pages.delay();
 }
 
-// pages.delay = async () => {
-//   let time=1000;
-//   await setTimeout(function() {  
-//     console.log("helloooooooooooooooooooo")
-//     // Your code here
-//     console.log("Delayed 10000 milliseconds");
-//   }, time);
-
-// }
-
-pages.favorite = async (url) => {
-  //event.preventDefault();
+pages.product = async (url) => {
   try{
     const product = await axios(url)    
-
-    //const product = [{"id":1,"name":"Bag","description":"Big Bag","price":"5","quantity":"99","created_at":null,"updated_at":null},{"id":2,"name":"Belt","description":"Leather Belt","price":"80","quantity":"99","created_at":null,"updated_at":null}]
-
     console.log(product.data);
       productsArray = product.data;
-      console.log('heyyyyyy: ')
-      console.log('qwas: '+product.data.name)
-      if(product.data.length != "0"){
-        //console.log(product.data.length)
+      console.log('qwas: '+productsArray.name)
+      if(productsArray.length != "0"){
         console.log("again?")
-        pages.displayFavorites()
+        pages.displayProduct()
       } else {
-        console.log("Couldn't load the favorite products! " + error);
+        console.log("Couldn't load the products! " + error);
       }
   }catch(error){
-      pages.print_message("Error from favorite API: " + error)
+    console.log("Error from dashboard API: " + error)
   }
 }
 
-pages.displayFavorites = async () => {
-  //let count=0;
-  //event.preventDefault();
+pages.displayProduct = async () => {
   const productsList = document.getElementById("product-cards");
   productsList.innerHTML = "";
-  productsArray.forEach((product) => {
-  //event.preventDefault();
     const listItem = document.createElement("div");
-    console.log(product.name)
+    console.log(productsArray.name)
     listItem.innerHTML = `
-    <div class="product flex-column">
-      <div class="product-name flex center bold big" id="product-name">
-        ` + product.name + `
-      </div>
-
+    <div class="product-chosen flex pointer">
       <div class="product-content flex center">
         <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
       </div>
 
-      <div class="product-buttons pointer">
-        <button class="favorite pointer" id="remove">Remove from Favorite</button>
-        
-        <button class="cart pointer" id="cart">Add to Cart</button>
-      </div>
-    </div>
-    `;
-
-    //console.log(class_student.class_id);
-    productsList.appendChild(listItem)
-  })
-  //event.preventDefault();
-  //await pages.delay();
-}
-
-pages.cart = async (url) => {
-  try{
-    const product = await axios(url)
-
-    console.log(product.data);
-      productsArray = product.data;
-      console.log('heyyyyyy: ')
-      console.log('qwas: '+product.data.name)
-      if(product.data.length != "0"){
-        console.log("again?")
-        pages.displayCarts()
-      } else {
-        console.log("Couldn't load the favorite products! " + error);
-      }
-  }catch(error){
-      pages.print_message("Error from favorite API: " + error)
-  }
-}
-
-pages.displayCarts = async () => {
-  //let count=0;
-  //event.preventDefault();
-  const productsList = document.getElementById("product-cards");
-  productsList.innerHTML = "";
-  productsArray.forEach((product) => {
-  //event.preventDefault();
-    const listItem = document.createElement("div");
-    console.log(product.name)
-    listItem.innerHTML = `
-    <div class="product flex-column">
       <div class="product-name flex center bold big" id="product-name">
-        ` + product.name + `
+        ` + productsArray.name + `
       </div>
 
-      <div class="product-content flex center">
-        <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
-      </div>
-
-      <div class="product-buttons pointer">
-        <button class="favorite pointer" id="remove">Add to Favorite</button>
-        
-        <button class="cart pointer" id="cart">Remove from Cart</button>
+      <div class="product-price flex center">        
+        <div class="price bold" id="price">$` + productsArray.price + `</div>
       </div>
     </div>
     `;
-
-    //console.log(class_student.class_id);
     productsList.appendChild(listItem)
-  })
-  //event.preventDefault();
-  //await pages.delay();
+}
+
+pages.chooseProduct = (product_id) => {
+  console.log(product_id)
+  localStorage.setItem('chosen_product', product_id)
+  window.location.href = './product.html'
 }
