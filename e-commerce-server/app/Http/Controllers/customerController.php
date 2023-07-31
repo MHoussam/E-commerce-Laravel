@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Favorite;
@@ -21,49 +22,56 @@ class customerController extends Controller
         return json_encode(["products" => $products]);
     }
 
-    function login($email, $password) {
-        if($email && $password) {
-            $users = User::where('email', $email)->first();
+    // function login($email, $password) {
+    //     if($email && $password) {
+    //         $users = User::where('email', $email)->first();
 
-            if(!Hash::check($password, $users['password'])) {
-                $users = 'Wrong Password!';
-                $status = 0;
-            }
-            else {
-                $status = 1;
-            }
-        }
-        else {
-            $users = "Fill all the inputs!";
-            $status = 0;
-        }
+    //         if(!Hash::check($password, $users['password'])) {
+    //             $users = 'Wrong Password!';
+    //             $status = 0;
+    //         }
+    //         else {
+    //             $status = 1;
+    //         }
+    //     }
+    //     else {
+    //         $users = "Fill all the inputs!";
+    //         $status = 0;
+    //     }
 
-        return json_encode([$status, $users]);
-    }
+    //     return json_encode([$status, $users]);
+    // }
 
-    function registration(Request $request) {
-        $users = new User;
+    // function registration(Request $request) {
+    //     $users = new User;
 
-        $users->first_name = $request->first_name;
-        $users->last_name = $request->last_name;
-        $users->email = $request->email;
-        $users->password = $request->password;
-        $users->type = 'customer';
-        $users->save();
+    //     $users->first_name = $request->first_name;
+    //     $users->last_name = $request->last_name;
+    //     $users->email = $request->email;
+    //     $users->password = $request->password;
+    //     $users->type = 'customer';
+    //     $users->save();
 
-        $status=1;
+    //     $status=1;
         
-        return json_encode([$status, $users]);
-    }
+    //     return json_encode([$status, $users]);
+    // }
 
     function add(Request $request) {
         $products = new Product;
+
+        // $request->validate([
+        //     'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ]);
+
+        // $photoPath = $request->file('photo')->store('photos', 'public');
 
         $products->name = $request->name;
         $products->description = $request->description;
         $products->price = $request->price;
         $products->quantity = $request->quantity;
-        $products->category = $request->category;;
+        $products->category = $request->category;
+        //$products->photo = $photoPath;
         $products->save();
 
         $status=1;
@@ -154,5 +162,11 @@ class customerController extends Controller
         $products->save();
 
         return json_encode([$products]);
+    }
+
+    public function store(Request $request)
+    {
+
+        return redirect()->route('products.index')->with('success', 'Product added successfully.');
     }
 }

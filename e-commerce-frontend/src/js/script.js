@@ -41,7 +41,7 @@ pages.editProduct = () => {
 
 pages.page_index = async () => {
   document.getElementById("login").addEventListener("click", async () => {
-    const index_url = pages.base_url + "login/"
+    const index_url = pages.base_url + "login"
     await pages.login(index_url)
   });
 }
@@ -135,9 +135,13 @@ pages.login = async (url) => {
     localStorage.setItem('first_name', null);
     localStorage.setItem('status', 1);
 
+    const userData = {
+      email: email,
+      password: password,
+    }
     try{
-        response = await axios(
-          url + email + '/' + password
+        response = await axios.post(
+          url, userData
           );
         
         console.log('aaaa: ' + response.data[0])
@@ -188,11 +192,11 @@ pages.register = async (url) => {
           ).then(response => {
             console.log(response.data);
 
-            console.log('aaaa: ' + response.data[0])
-            if(response.data[0] != 0) {
-              localStorage.setItem('id', response.data[1].id);
-              localStorage.setItem('first_name', response.data[1].first_name);
-              console.log(response.data[1].first_name)
+            console.log('aaaa: ' + response.data['status'])
+            if(response.data['status'] === 'success') {
+              localStorage.setItem('id', response.data['user'].id);
+              localStorage.setItem('first_name', response.data['user'].first_name);
+              console.log(response.data['user'].first_name)
               window.location.href = "./dashboard.html";
             } else {
               console.log("Fill all the inputs!");
@@ -268,24 +272,26 @@ pages.displayProducts = async () => {
     console.log(product.name)
     listItem.innerHTML = `
     <div class="product flex-column pointer" onclick="pages.chooseProduct(${product.id})">
-      <div class="product-name flex center bold big" id="product-name">
-        ` + product.name + `
-      </div>
+      <div class="more-info" onclick="pages.chooseAdminProduct(${product.id})">
+        <div class="product-name flex center bold big" id="product-name">
+          ` + product.name + `
+        </div>
 
-      <div class="product-content flex center">
-        <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
-      </div>
+        <div class="product-content flex center">
+            <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
+        </div>
 
-      <div class="product-price flex center">        
-        <div class="price bold" id="price">Price: $` + product.price + `</div>
-      </div>
+        <div class="product-price flex center">        
+          <div class="price bold" id="price">Price: $` + product.price + `</div>
+        </div>
 
-      <div class="show-info bold">
-        <p>Name: ` + product.name + `</p>
-        <p>Price: ` + product.price + `</p>
-        <p>Category: ` + product.category + `</p>
-        <p>Description: ` + product.description + `</p>
-      </div>
+        <div class="show-info bold">
+          <p>Name: ` + product.name + `</p>
+          <p>Price: ` + product.price + `</p>
+          <p>Category: ` + product.category + `</p>
+          <p>Description: ` + product.description + `</p>
+        </div>
+      </div
     </div>
     `;
     productsList.appendChild(listItem)

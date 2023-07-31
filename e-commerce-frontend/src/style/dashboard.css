@@ -83,6 +83,7 @@ body {
 .product-list {
     list-style: none;
     column-gap: 20px;
+    row-gap: 20px;
 }
 
 .title {

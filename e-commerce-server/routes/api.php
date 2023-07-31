@@ -2,14 +2,15 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TodoController;
 use App\Http\Controllers\customerController;
 
 Route::get('/get_products/{id?}', [customerController::class, "getProducts"]);
 
-Route::get('/login/{email}/{password}', [customerController::class, "login"]);
+// Route::get('/log/{email}/{password}', [customerController::class, "login"]);
 
-Route::post('/register', [customerController::class, "registration"]);
+Route::post('/regist', [customerController::class, "registration"]);
 
 Route::post('/add', [customerController::class, "add"]);
 
@@ -28,3 +29,19 @@ Route::post('/add_cart', [customerController::class, "addCart"]);
 Route::post('/delete', [customerController::class, "delete"]);
 
 Route::post('/edit', [customerController::class, "edit"]);
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('login', 'login');
+    Route::post('register', 'register');
+    Route::post('logout', 'logout');
+    Route::post('refresh', 'refresh');
+
+});
+
+Route::controller(TodoController::class)->group(function () {
+    Route::get('todos', 'index');
+    Route::post('todo', 'store');
+    Route::get('todo/{id}', 'show');
+    Route::put('todo/{id}', 'update');
+    Route::delete('todo/{id}', 'destroy');
+}); 
