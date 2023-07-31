@@ -194,20 +194,43 @@ pages.displayProduct = async () => {
     const listItem = document.createElement("div");
     console.log(productsArray.name)
     listItem.innerHTML = `
-    <div class="product-chosen flex pointer">
-      <div class="product-content flex center">
-        <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
+    <div class="product-chosen flex">
+      <div class="product-pic flex center">
+        <img src="../assets/images/1.jpg" type="image/jpg" class="picture">
       </div>
 
-      <div class="product-name flex center bold big" id="product-name">
-        ` + productsArray.name + `
-      </div>
+      <div class="product-content-right flex-column">
+        <div class="content-right-up">
+          <div class="product-name flex center bold big padding" id="product-name">
+            ` + productsArray.name + `
+          </div>
 
-      <div class="product-price flex center">        
-        <div class="price bold" id="price">$` + productsArray.price + `</div>
+          <div class="product-price flex center padding">        
+            <div class="price bold mid flex center" id="price">Price: $` + productsArray.price + `</div>
+          </div>
+
+          <div class="product-description flex center padding">        
+            <div class="description bold mid" id="description">Description: ` + productsArray.description + `</div>
+          </div>
+        </div>
+
+        <div class="content-right-down flex center">
+          <div class="show flex center">
+            <button id="favorite" class="show-btn bold pointer center content-btn">
+                Favorite List
+            </button>
+          </div>
+
+          <div class="show flex center">
+            <button id="cart" class="show-btn bold pointer center content-btn">
+              My Cart
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     `;
+    listItem.className = "product-content";
     productsList.appendChild(listItem)
 }
 
