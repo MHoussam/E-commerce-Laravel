@@ -112,12 +112,12 @@ pages.page_product = async () => {
 
 pages.page_adminProduct = async () => {
   const dashboard_url = pages.base_url + "product/" + localStorage.getItem('chosen_product')
-  await pages.product(dashboard_url)
+  await pages.adminProduct(dashboard_url)
 
   pages.goTo('admin-dashboard')
   pages.goTo('logout')
   pages.goTo('add')
-  //pages.deleteP('delete')
+  pages.goTo('edit')
 }
 
 pages.page_edit = async () => {
@@ -359,6 +359,73 @@ pages.displayProduct = async () => {
     productsList.appendChild(listItem)
 }
 
+pages.adminProduct = async (url) => {
+  try{
+    const product = await axios(url)    
+    console.log(product.data);
+      productsArray = product.data;
+      console.log('qwas: '+productsArray.name)
+      if(productsArray.length != "0"){
+        console.log("again?")
+        pages.displayChosenAdminProduct()
+      } else {
+        console.log("Couldn't load the products! " + error);
+      }
+  }catch(error){
+    console.log("Error from dashboard API: " + error)
+  }
+}
+
+pages.displayChosenAdminProduct = async () => {
+  const productsList = document.getElementById("product-cards");
+  productsList.innerHTML = "";
+    const listItem = document.createElement("div");
+    console.log(productsArray.name)
+    listItem.innerHTML = `
+    <div class="product-chosen flex">
+      <div class="product-pic flex center">
+        <img src="../assets/images/1.jpg" type="image/jpg" class="picture">
+      </div>
+
+      <div class="product-content-right flex-column">
+        <div class="content-right-up">
+          <div class="product-name flex center bold big padding" id="product-name">
+            ` + productsArray.name + `
+          </div>
+
+          <div class="product-price flex center padding">        
+            <div class="price bold mid flex center" id="price">Price: $` + productsArray.price + `</div>
+          </div>
+
+          <div class="product-category flex center padding">        
+            <div class="category bold mid" id="category">Category: ` + productsArray.category + `</div>
+          </div>
+
+          <div class="product-description flex center padding">        
+            <div class="description bold mid" id="description">Description: ` + productsArray.description + `</div>
+          </div>
+        </div>
+
+        <div class="content-right-down flex center">
+          <div class="show flex center">
+            <button id="edit" class="show-btn bold pointer center content-btn">
+                Edit
+            </button>
+          </div>
+
+          <div class="show flex center">
+            <button id="delete-btn" class="show-btn bold pointer center content-btn" onclick="pages.deleteP()">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+    listItem.className = "product-content";
+    productsList.appendChild(listItem)
+}
+
 pages.adminDashboard = async (url) => {
   try{
     const product = await axios(url)    
@@ -385,7 +452,7 @@ pages.displayAdminProducts = async () => {
     console.log(product.name)
     listItem.innerHTML = `
     <div class="product flex-column pointer">
-      <div class="more-info" onclick="pages.chooseProduct(${product.id})">
+      <div class="more-info" onclick="pages.chooseAdminProduct(${product.id})">
         <div class="product-name flex center bold big" id="product-name">
           ` + product.name + `
         </div>
@@ -496,6 +563,12 @@ pages.displayEditProducts = async () => {
 pages.chooseProduct = (product_id) => {
   console.log(product_id)
   localStorage.setItem('chosen_product', product_id)
+  window.location.href = './product.html'
+}
+
+pages.chooseAdminProduct = (product_id) => {
+  console.log(product_id)
+  localStorage.setItem('chosen_product', product_id)
   window.location.href = './adminProduct.html'
 }
 
@@ -526,7 +599,7 @@ pages.add = async (url) => {
       productData
     )
 
-    window.location.href = './admin-dashboard.html'
+    window.location.href = './dashboard.html'
   }catch(error){
     console.log("Error from Add API: " + error)
   }
@@ -598,6 +671,7 @@ pages.dashboard = async (url) => {
     console.log("Error from dashboard API: " + error)
   }
 }
+
 pages.fav_cart = async (url) => {
   const id = localStorage.getItem('id');
   url += '/' + id
