@@ -8,6 +8,7 @@ pages.loadFor = (page) => {
 
 pages.goTo = (page) => {
   document.getElementById(page).addEventListener("click", async () => {
+    console.log('page: '+page)
     if(page === 'logout'){
       localStorage.setItem('id', null)
       page = "../../index" 
@@ -24,16 +25,16 @@ pages.addTo = (button, func) => {
   });
 }
 
-pages.delete = (button) => {
-  document.getElementById(button).addEventListener("click", async () => {
-    const url = pages.base_url + button
+pages.deleteP = async () => {
+  //document.getElementById('delete').addEventListener("click", async () => {
+    const url = pages.base_url + 'delete'
     await pages.delete(url)    
-  });
+  //});
 }
 
-pages.edit = (button) => {
-  document.getElementById(button).addEventListener("click", async () => {
-    const url = pages.base_url + button
+pages.editProduct = () => {
+  document.getElementById('edit-btn').addEventListener("click", async () => {
+    const url = pages.base_url + 'edit'
     await pages.edit(url)    
   });
 }
@@ -72,8 +73,8 @@ pages.page_admin = async () => {
   const dashboard_url = pages.base_url + "dashboard"
   await pages.adminDashboard(dashboard_url)
 
-  pages.delete('delete')
-  pages.goTo('edit')
+  //pages.deleteP('delete')
+  //pages.goTo('edit')
   pages.goTo('logout')
   pages.goTo('add')
 }
@@ -116,17 +117,17 @@ pages.page_adminProduct = async () => {
   pages.goTo('admin-dashboard')
   pages.goTo('logout')
   pages.goTo('add')
-  pages.delete('delete')
+  //pages.deleteP('delete')
 }
 
 pages.page_edit = async () => {
-  const dashboard_url = pages.base_url + "edit"
+  const dashboard_url = pages.base_url + "product/" + localStorage.getItem('chosen_product')
   await pages.editProducts(dashboard_url)
 
-  pages.edit('edit')
+  pages.editProduct('edit-btn', 'edit')
 }
 
-pages.login = async (url,event) => {
+pages.login = async (url) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -230,6 +231,8 @@ pages.addProduct = async (url) => {
             console.log('aaaa: ' + response.data[0])
             if(response.data[0] != 0) {
               console.log('Succeeded')
+
+              window.location.href = './admin-dashboard.html'
             } else {
               console.log("Fill all the inputs!");
             }
@@ -374,11 +377,11 @@ pages.adminDashboard = async (url) => {
 }
 
 pages.displayAdminProducts = async () => {
-  const productsList = document.getElementById("product-cards");
+  const productsList = document.getElementById("product-list");
   productsList.innerHTML = "";
   console.log('p: ' + productsArray)
   productsArray.forEach((product) => {
-    const listItem = document.createElement("div");
+    const listItem = document.createElement("li");
     console.log(product.name)
     listItem.innerHTML = `
     <div class="product flex-column pointer">
@@ -405,7 +408,7 @@ pages.displayAdminProducts = async () => {
 
       <div class="product-buttons flex">
         <div class="show flex">
-          <button id="edit" class="product-show-btn bold pointer">
+          <button id="edit" class="product-show-btn bold pointer" onclick="pages.editPro(${product.id})">
             Edit
           </button>
         </div>
@@ -422,15 +425,90 @@ pages.displayAdminProducts = async () => {
   })
 }
 
+pages.editProducts = async (url) => {
+  try{
+    const product = await axios(url)  
+
+    console.log(product.data);
+
+      productsArray = product.data;
+
+      console.log('qwas: '+product.data.name)
+
+      if(product.data.length != "0"){
+        console.log("again?")
+        pages.displayEditProducts()
+      } else {
+        console.log("Couldn't load the products! " + error);
+      }
+  }catch(error){
+    console.log("Error from dashboard API: " + error)
+  }
+}
+
+pages.displayEditProducts = async () => {
+  const productsList = document.getElementById("edit-form");
+  
+  console.log('p: ' + productsArray.name)
+    const listItem = document.createElement("div");
+    console.log(productsArray.name)
+    productsList.innerHTML += `
+    <div class="email">
+      <label for="">Name</label>
+      <input type="text" class="email-input" id="name" value="${productsArray.name}">
+    </div>
+
+    <br>
+
+    <div class="password">
+      <label for="">Description</label>
+      <input type="text" class="password-input" id="description" value="${productsArray.description}">
+    </div>
+
+    <br>
+
+    <div class="email">
+      <label for="">Price</label>
+      <input type="text" class="email-input" id="price" value="${productsArray.price}">
+    </div>
+
+    <br>
+
+    <div class="password">
+      <label for="">Quantity</label>
+      <input type="text" class="password-input" id="quantity" value="${productsArray.quantity}">
+    </div>
+
+    <br>
+
+    <div class="password">
+      <label for="">Category</label>
+      <input type="text" class="password-input" id="category" value="${productsArray.category}">
+    </div>
+
+    <br>
+
+    <button class="login-btn pointer" id="edit-btn">Edit</button>
+    `;
+    productsList.appendChild(listItem)
+}
+
 pages.chooseProduct = (product_id) => {
   console.log(product_id)
   localStorage.setItem('chosen_product', product_id)
   window.location.href = './adminProduct.html'
 }
 
+pages.editPro = (product_id) => {
+  console.log(product_id)
+  localStorage.setItem('chosen_product', product_id)
+  window.location.href = './edit.html'
+}
+
 pages.deleteProduct = (product_id) => {
   console.log(product_id)
   localStorage.setItem('chosen_product', product_id)
+  pages.deleteP()
 }
 
 pages.add = async (url) => {

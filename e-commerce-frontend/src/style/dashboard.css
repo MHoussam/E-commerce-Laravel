@@ -81,7 +81,8 @@ body {
 }
 
 .product-list {
-    text-decoration: none;
+    list-style: none;
+    column-gap: 20px;
 }
 
 .title {
