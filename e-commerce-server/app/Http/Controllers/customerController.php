@@ -90,7 +90,9 @@ class customerController extends Controller
     }
 
     function addFavorite(Request $request) {
-        $favorites = Favorite::where('product_id', $request->product_id)->first();
+        $favorites = Favorite::where('product_id', $request->product_id)
+                             ->where('user_id', $request->user_id)
+                             ->first();
 
         if(is_null($favorites)){
             $favorites = new Favorite;
@@ -104,11 +106,13 @@ class customerController extends Controller
     }
 
     function addCart(Request $request) {
-        $carts = Cart::where('product_id', $request->product_id)->first();
+        $carts = Cart::where('product_id', $request->product_id)
+                     ->where('user_id', $request->user_id)
+                     ->first();
 
         if(is_null($carts)){
             $carts = new Cart;
-
+            
             $carts->user_id = $request->user_id;
             $carts->product_id = $request->product_id;
             $carts->save();

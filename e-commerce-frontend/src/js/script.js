@@ -6,9 +6,16 @@ pages.loadFor = (page) => {
   eval("pages.page_" + page + "();")
 }
 
-pages.goTo = (page) =>{
+pages.goTo = (page) => {
   document.getElementById(page).addEventListener("click", async () => {
     window.location.href = "./" + page + ".html";
+  });
+}
+
+pages.addTo = (button, func) => {
+  document.getElementById(button).addEventListener("click", async () => {
+    const url = pages.base_url + "add_" + func
+    await pages.add(url)    
   });
 }
 
@@ -54,10 +61,8 @@ pages.page_product = async () => {
   const product_url = pages.base_url + "product/" + localStorage.getItem('chosen_product')
   await pages.product(product_url)
 
-  document.getElementById("favorite-btn").addEventListener("click", async () => {
-    const favorite_url = pages.base_url + "add_favorite"
-    await pages.addFavorite(favorite_url)    
-  });
+  pages.addTo('favorite-btn', 'favorite')
+  pages.addTo('cart-btn', 'cart')
         
   pages.goTo('dashboard')
   pages.goTo('favorite')
@@ -246,7 +251,7 @@ pages.chooseProduct = (product_id) => {
   window.location.href = './product.html'
 }
 
-pages.addFavorite = async (url) => {
+pages.add = async (url) => {
   const id = localStorage.getItem('id');
   const product_id = localStorage.getItem('chosen_product');
   
@@ -261,6 +266,6 @@ pages.addFavorite = async (url) => {
       productData
     )
   }catch(error){
-    console.log("Error from Add Favorite API: " + error)
+    console.log("Error from Add API: " + error)
   }
 }
