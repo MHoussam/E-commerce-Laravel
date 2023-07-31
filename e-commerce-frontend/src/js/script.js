@@ -24,6 +24,20 @@ pages.addTo = (button, func) => {
   });
 }
 
+pages.delete = (button) => {
+  document.getElementById(button).addEventListener("click", async () => {
+    const url = pages.base_url + button
+    await pages.delete(url)    
+  });
+}
+
+pages.edit = (button) => {
+  document.getElementById(button).addEventListener("click", async () => {
+    const url = pages.base_url + button
+    await pages.edit(url)    
+  });
+}
+
 pages.page_index = async () => {
   document.getElementById("login").addEventListener("click", async () => {
     const index_url = pages.base_url + "login/"
@@ -56,8 +70,10 @@ pages.page_dashboard = async () => {
 
 pages.page_admin = async () => {
   const dashboard_url = pages.base_url + "dashboard"
-  await pages.dashboard(dashboard_url)
+  await pages.adminDashboard(dashboard_url)
 
+  pages.delete('delete')
+  pages.goTo('edit')
   pages.goTo('logout')
   pages.goTo('add')
 }
@@ -91,6 +107,23 @@ pages.page_product = async () => {
   pages.goTo('dashboard')
   pages.goTo('favorite')
   pages.goTo('cart')
+}
+
+pages.page_adminProduct = async () => {
+  const dashboard_url = pages.base_url + "product/" + localStorage.getItem('chosen_product')
+  await pages.product(dashboard_url)
+
+  pages.goTo('admin-dashboard')
+  pages.goTo('logout')
+  pages.goTo('add')
+  pages.delete('delete')
+}
+
+pages.page_edit = async () => {
+  const dashboard_url = pages.base_url + "edit"
+  await pages.editProducts(dashboard_url)
+
+  pages.edit('edit')
 }
 
 pages.login = async (url,event) => {
@@ -323,10 +356,81 @@ pages.displayProduct = async () => {
     productsList.appendChild(listItem)
 }
 
+pages.adminDashboard = async (url) => {
+  try{
+    const product = await axios(url)    
+    console.log(product.data);
+      productsArray = product.data;
+      console.log('qwas: '+product.data[0].name)
+      if(product.data.length != "0"){
+        console.log("again?")
+        pages.displayAdminProducts()
+      } else {
+        console.log("Couldn't load the products! " + error);
+      }
+  }catch(error){
+    console.log("Error from dashboard API: " + error)
+  }
+}
+
+pages.displayAdminProducts = async () => {
+  const productsList = document.getElementById("product-cards");
+  productsList.innerHTML = "";
+  console.log('p: ' + productsArray)
+  productsArray.forEach((product) => {
+    const listItem = document.createElement("div");
+    console.log(product.name)
+    listItem.innerHTML = `
+    <div class="product flex-column pointer">
+      <div class="more-info" onclick="pages.chooseProduct(${product.id})">
+        <div class="product-name flex center bold big" id="product-name">
+          ` + product.name + `
+        </div>
+
+        <div class="product-content flex center">
+          <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
+        </div>
+
+        <div class="product-price flex center">        
+          <div class="price bold" id="price">Price: $` + product.price + `</div>
+        </div>
+
+        <div class="show-info bold">
+          <p>Name: ` + product.name + `</p>
+          <p>Price: ` + product.price + `</p>
+          <p>Category: ` + product.category + `</p>
+          <p>Description: ` + product.description + `</p>
+        </div>
+      </div>
+
+      <div class="product-buttons flex">
+        <div class="show flex">
+          <button id="edit" class="product-show-btn bold pointer">
+            Edit
+          </button>
+        </div>
+
+        <div class="show flex">
+          <button id="delete" class="product-show-btn bold pointer" onclick="pages.deleteProduct(${product.id})">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    `;
+    productsList.appendChild(listItem)
+  })
+}
+
 pages.chooseProduct = (product_id) => {
   console.log(product_id)
   localStorage.setItem('chosen_product', product_id)
-  window.location.href = './product.html'
+  window.location.href = './adminProduct.html'
+}
+
+pages.deleteProduct = (product_id) => {
+  console.log(product_id)
+  localStorage.setItem('chosen_product', product_id)
 }
 
 pages.add = async (url) => {
@@ -343,10 +447,63 @@ pages.add = async (url) => {
       url,
       productData
     )
+
+    window.location.href = './admin-dashboard.html'
   }catch(error){
     console.log("Error from Add API: " + error)
   }
 }
+
+pages.delete = async (url) => {
+  const product_id = localStorage.getItem('chosen_product');
+  console.log('product_id: ' + product_id)
+  try{
+    const productData = {
+      product_id: product_id
+    };
+
+    response = await axios.post(
+      url,
+      productData
+    )
+
+    window.location.href = './admin-dashboard.html'
+  }catch(error){
+    console.log("Error from Delete API: " + error)
+  }
+}
+
+pages.edit = async (url) => {
+  const name = document.getElementById("name").value;
+  const description = document.getElementById("description").value;
+  const price = document.getElementById("price").value;
+  const quantity = document.getElementById("quantity").value;
+  const category = document.getElementById("category").value;
+  const product_id = localStorage.getItem('chosen_product');
+
+  console.log('product_id: ' + product_id)
+
+  try{
+    const productData = {
+      product_id: product_id,
+      name: name,
+      description: description,
+      price: price,
+      quantity: quantity,
+      category: category
+    };
+
+    response = await axios.post(
+      url,
+      productData
+    )
+
+    window.location.href = './admin-dashboard.html'
+  }catch(error){
+    console.log("Error from Edit API: " + error)
+  }
+}
+
 pages.dashboard = async (url) => {
   try{
     const product = await axios(url)    

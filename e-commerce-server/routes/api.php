@@ -24,3 +24,5 @@ Route::get('/product/{id}', [customerController::class, "product"]);
 Route::post('/add_favorite', [customerController::class, "addFavorite"]);
 
 Route::post('/add_cart', [customerController::class, "addCart"]);
+
+Route::post('/delete', [customerController::class, "delete"]);

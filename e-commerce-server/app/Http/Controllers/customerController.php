@@ -134,4 +134,12 @@ class customerController extends Controller
             return json_encode([$carts]);
         }
     }
+
+    function delete(Request $request) {
+        $products = Product::find($request->product_id);
+        
+        $products->delete();
+
+        return json_encode(['message' => 'Row Deleted Successfully']);
+    }
 }
