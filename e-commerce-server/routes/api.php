@@ -13,9 +13,9 @@ Route::post('/register', [customerController::class, "registration"]);
 
 Route::get('/dashboard', [customerController::class, "dashboard"]);
 
-Route::get('/favorite', [customerController::class, "favorite"]);
+Route::get('/favorite/{user_id}', [customerController::class, "favorite"]);
 
-Route::get('/cart', [customerController::class, "cart"]);
+Route::get('/cart/{user_id}', [customerController::class, "cart"]);
 
 Route::get('/product/{id}', [customerController::class, "product"]);
 

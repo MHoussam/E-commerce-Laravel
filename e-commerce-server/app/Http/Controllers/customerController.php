@@ -42,7 +42,6 @@ class customerController extends Controller
     }
 
     function registration(Request $request) {
-        
         $users = new User;
 
         $users->first_name = $request->first_name;
@@ -63,17 +62,17 @@ class customerController extends Controller
         return json_encode($products);
     }
 
-    function favorite() {
-        $favorites = Favorite::all();
-        
+    function favorite($user_id) {
+        $favorites = Favorite::where('user_id', $user_id)->get();
+
         $product_id = $favorites->pluck('product_id');
         $products = Product::whereIn('id', $product_id)->get();
 
         return json_encode($products);
     }
 
-    function cart() {
-        $carts = Cart::all();
+    function cart($user_id) {
+        $carts = Cart::where('user_id', $user_id)->get();
         
         $product_id = $carts->pluck('product_id');
         $products = Product::whereIn('id', $product_id)->get();

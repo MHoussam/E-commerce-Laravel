@@ -49,7 +49,7 @@ pages.page_dashboard = async () => {
 
 pages.page_favorite = async () => {
   const favorite_url = pages.base_url + "favorite"
-  await pages.dashboard(favorite_url)
+  await pages.fav_cart(favorite_url) 
         
   pages.goTo('logout')
   pages.goTo('dashboard')
@@ -58,7 +58,7 @@ pages.page_favorite = async () => {
 
 pages.page_cart = async () => {
   const cart_url = pages.base_url + "cart"
-  await pages.dashboard(cart_url)
+  await pages.fav_cart(cart_url) 
         
   pages.goTo('logout')
   pages.goTo('dashboard')
@@ -81,7 +81,7 @@ pages.page_product = async () => {
 pages.login = async (url,event) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    
+
     localStorage.setItem('id', null);
     localStorage.setItem('first_name', null);
     localStorage.setItem('status', 1);
@@ -169,6 +169,7 @@ pages.dashboard = async (url) => {
 pages.displayProducts = async () => {
   const productsList = document.getElementById("product-cards");
   productsList.innerHTML = "";
+  console.log('p: ' + productsArray)
   productsArray.forEach((product) => {
     const listItem = document.createElement("div");
     console.log(product.name)
@@ -274,7 +275,7 @@ pages.chooseProduct = (product_id) => {
 pages.add = async (url) => {
   const id = localStorage.getItem('id');
   const product_id = localStorage.getItem('chosen_product');
-  
+  console.log('id: ' + id)
   try{
     const productData = {
       user_id: id,
@@ -287,5 +288,40 @@ pages.add = async (url) => {
     )
   }catch(error){
     console.log("Error from Add API: " + error)
+  }
+}
+pages.dashboard = async (url) => {
+  try{
+    const product = await axios(url)    
+    console.log(product.data);
+      productsArray = product.data;
+      console.log('qwas: '+product.data[0].name)
+      if(product.data.length != "0"){
+        console.log("again?")
+        pages.displayProducts()
+      } else {
+        console.log("Couldn't load the products! " + error);
+      }
+  }catch(error){
+    console.log("Error from dashboard API: " + error)
+  }
+}
+pages.fav_cart = async (url) => {
+  const id = localStorage.getItem('id');
+  url += '/' + id
+
+  try{
+    const product = await axios(url)    
+    console.log(product.data);
+      productsArray = product.data;
+      console.log('qwas: '+product.data[0].name)
+      if(product.data.length != "0"){
+        console.log("again?")
+        pages.displayProducts()
+      } else {
+        console.log("Couldn't load the products! " + error);
+      }
+  }catch(error){
+    console.log("Error from dashboard API: " + error)
   }
 }
