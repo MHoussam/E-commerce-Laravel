@@ -15,6 +15,10 @@
     justify-content: center;
 }
 
+.align-center {
+    align-items: center;
+}
+
 .padding {
     padding: 2%;
 }
@@ -43,6 +47,7 @@ body {
     background-color: rgb(122, 163, 252);
     margin: 0;
     padding: 1.5% 1%;
+    justify-content: space-between;
 }
 
 .product-cards {
@@ -81,7 +86,9 @@ body {
 }
 
 .title {
-    width: 80%;    
+    margin-left: 4%;
+    width: 50%;    
+    justify-content: space-between;
 }
 
 .header-buttons {
@@ -98,10 +105,23 @@ body {
     justify-content: flex-end;
 }
 
-.show-btn {
+.show-btn, .logout-btn {
     padding: 1%;
     width: 100%; 
     height: 50%;
+    justify-content: flex-end;
+}
+
+.logout {
+    width: 50%;
+}
+
+.logout-btn {
+    width: 30%;
+}
+
+.products-title {
+    width: 50%;
     justify-content: flex-end;
 }
 
@@ -120,12 +140,16 @@ body {
     justify-content: space-between;
 }
 
-.product-description {
+.product-description, .product-category {
     padding-right: 0;
     padding-left: 0;
     width: 100%;
     border-top: 2px solid rgb(207, 117, 32);
     justify-content: flex-start;
+}
+
+.product-category {
+    justify-content: center;
 }
 
 .content-right-down{   
@@ -144,11 +168,11 @@ body {
 .show-info {
     display: none;
     position: absolute;
-    top: 30%; 
-    left: 0;
+    top: 15%; 
+    left: 5%;
     background-color: #fff;
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: .5% 1%;
   }
   
   .product:hover .show-info {

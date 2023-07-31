@@ -8,6 +8,11 @@ pages.loadFor = (page) => {
 
 pages.goTo = (page) => {
   document.getElementById(page).addEventListener("click", async () => {
+    if(page === 'logout'){
+      localStorage.setItem('id', null)
+      page = "../../index" 
+    }
+
     window.location.href = "./" + page + ".html";
   });
 }
@@ -37,6 +42,7 @@ pages.page_dashboard = async () => {
   const dashboard_url = pages.base_url + "dashboard"
   await pages.dashboard(dashboard_url)
 
+  pages.goTo('logout')
   pages.goTo('favorite')
   pages.goTo('cart')
 }
@@ -45,6 +51,7 @@ pages.page_favorite = async () => {
   const favorite_url = pages.base_url + "favorite"
   await pages.dashboard(favorite_url)
         
+  pages.goTo('logout')
   pages.goTo('dashboard')
   pages.goTo('cart')
 }
@@ -53,6 +60,7 @@ pages.page_cart = async () => {
   const cart_url = pages.base_url + "cart"
   await pages.dashboard(cart_url)
         
+  pages.goTo('logout')
   pages.goTo('dashboard')
   pages.goTo('favorite')
 }
@@ -64,6 +72,7 @@ pages.page_product = async () => {
   pages.addTo('favorite-btn', 'favorite')
   pages.addTo('cart-btn', 'cart')
         
+  pages.goTo('logout')
   pages.goTo('dashboard')
   pages.goTo('favorite')
   pages.goTo('cart')
@@ -72,7 +81,7 @@ pages.page_product = async () => {
 pages.login = async (url,event) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    event.preventDefault();
+    
     localStorage.setItem('id', null);
     localStorage.setItem('first_name', null);
     localStorage.setItem('status', 1);
@@ -174,12 +183,14 @@ pages.displayProducts = async () => {
       </div>
 
       <div class="product-price flex center">        
-        <div class="price bold" id="price">$` + product.price + `</div>
+        <div class="price bold" id="price">Price: $` + product.price + `</div>
       </div>
 
-      <div class="show-info">
-        <p>Product 1 Description</p>
-        <p>Rating: 4.5 / 5</p>
+      <div class="show-info bold">
+        <p>Name: ` + product.name + `</p>
+        <p>Price: ` + product.price + `</p>
+        <p>Category: ` + product.category + `</p>
+        <p>Description: ` + product.description + `</p>
       </div>
     </div>
     `;
@@ -223,6 +234,10 @@ pages.displayProduct = async () => {
 
           <div class="product-price flex center padding">        
             <div class="price bold mid flex center" id="price">Price: $` + productsArray.price + `</div>
+          </div>
+
+          <div class="product-category flex center padding">        
+            <div class="category bold mid" id="category">Category: ` + productsArray.category + `</div>
           </div>
 
           <div class="product-description flex center padding">        
