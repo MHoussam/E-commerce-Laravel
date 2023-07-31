@@ -93,6 +93,7 @@ body {
 
 .header-buttons {
     column-gap: 10px;
+    width: 20%;
 }
 
 .third {

@@ -11,6 +11,8 @@ Route::get('/login/{email}/{password}', [customerController::class, "login"]);
 
 Route::post('/register', [customerController::class, "registration"]);
 
+Route::post('/add', [customerController::class, "add"]);
+
 Route::get('/dashboard', [customerController::class, "dashboard"]);
 
 Route::get('/favorite/{user_id}', [customerController::class, "favorite"]);

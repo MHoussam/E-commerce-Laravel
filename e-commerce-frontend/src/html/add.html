@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" href="../style/index.css" rel="stylesheet">
+        <title>Add a Product</title>
+    </head>
+
+    <body>
+        <div class="login">
+            <div class="login-title">
+                <h2 id="title">Add a Product</h2>
+            </div>
+                
+            <hr>
+                
+            <div class="login-form">
+                <div class="email">
+                    <label for="">Name</label>
+                    <input type="text" class="email-input" id="name">
+                </div>
+
+                <br>
+
+                <div class="password">
+                    <label for="">Description</label>
+                    <input type="text" class="password-input" id="description">
+                </div>
+
+                <br>
+
+                <div class="email">
+                    <label for="">Price</label>
+                    <input type="text" class="email-input" id="price">
+                </div>
+
+                <br>
+
+                <div class="password">
+                    <label for="">Quantity</label>
+                    <input type="text" class="password-input" id="quantity">
+                </div>
+
+                <br>
+
+                <div class="password">
+                    <label for="">Category</label>
+                    <input type="text" class="password-input" id="category">
+                </div>
+
+                <br>
+
+                <button class="login-btn" id="add">Add</button>
+            </div>
+        </div> 
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../js/script.js"></script>
+        <script>
+            pages.loadFor("add")
+        </script>    
+    </body>
+</html>

@@ -56,6 +56,21 @@ class customerController extends Controller
         return json_encode([$status, $users]);
     }
 
+    function add(Request $request) {
+        $products = new Product;
+
+        $products->name = $request->name;
+        $products->description = $request->description;
+        $products->price = $request->price;
+        $products->quantity = $request->quantity;
+        $products->category = $request->category;;
+        $products->save();
+
+        $status=1;
+        
+        return json_encode([$status, $products]);
+    }
+
     function dashboard() {
         $products = Product::all();
         

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" href="../style/dashboard.css" rel="stylesheet">
+        <title>Dashboard</title>
+    </head>
+    <body>
+        <div class="product-display flex-column">
+            <div class="header flex center">
+                <div class="title flex center">
+                    <div class="logout flex align-center">
+                        <button id="logout" class="logout-btn bold pointer">
+                            Logout
+                        </button>
+                    </div>
+
+                    <h1 id="products-title" class="products-title flex center">
+                        Products
+                    </h1>
+                </div>
+
+                <div class="header-buttons flex">
+                    <div class="show flex">
+                        <button id="add" class="add-btn bold pointer">
+                            Add a Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-cards flex wrap" id="product-cards">
+                <ol id="product-list" class="product-list flex wrap">
+                </ol>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../js/script.js"></script>
+        <script>
+            pages.loadFor("admin")
+        </script>  
+    </body>
+</html>

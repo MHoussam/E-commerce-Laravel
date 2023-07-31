@@ -38,6 +38,13 @@ pages.page_register = async () => {
   });
 }
 
+pages.page_add = async () => {
+  document.getElementById("add").addEventListener("click", async () => {
+    const add_url = pages.base_url + "add"
+    await pages.addProduct(add_url)    
+  });
+}
+
 pages.page_dashboard = async () => {
   const dashboard_url = pages.base_url + "dashboard"
   await pages.dashboard(dashboard_url)
@@ -45,6 +52,14 @@ pages.page_dashboard = async () => {
   pages.goTo('logout')
   pages.goTo('favorite')
   pages.goTo('cart')
+}
+
+pages.page_admin = async () => {
+  const dashboard_url = pages.base_url + "dashboard"
+  await pages.dashboard(dashboard_url)
+
+  pages.goTo('logout')
+  pages.goTo('add')
 }
 
 pages.page_favorite = async () => {
@@ -98,7 +113,12 @@ pages.login = async (url,event) => {
           localStorage.setItem('first_name', response.data[1].first_name);
           
           console.log(response.data[1].first_name)
-          window.location.href = "./src/html/dashboard.html";
+          if(response.data[1].type !== 'admin') {
+            window.location.href = "./src/html/dashboard.html";
+          }
+          else {
+            window.location.href = "./src/html/admin-dashboard.html";
+          }
         } else {
           console.log("Wrong Credentials!");
         }
@@ -146,6 +166,43 @@ pages.register = async (url) => {
           })
     }catch(error){
       console.log("Error from Register API: " + error)
+    }
+}
+
+pages.addProduct = async (url) => {
+  const name = document.getElementById("name").value;
+  const description = document.getElementById("description").value;
+  const price = document.getElementById("price").value;
+  const quantity = document.getElementById("quantity").value;
+  const category = document.getElementById("category").value;
+
+    try{
+      //console.log('whatttt')
+
+      const userData = {
+        name: name,
+        description: description,
+        price: price,
+        quantity: quantity,
+        category: category
+      };
+
+      console.log(url)
+        response = await axios.post(
+          url,
+          userData
+          ).then(response => {
+            console.log(response.data);
+
+            console.log('aaaa: ' + response.data[0])
+            if(response.data[0] != 0) {
+              console.log('Succeeded')
+            } else {
+              console.log("Fill all the inputs!");
+            }
+          })
+    }catch(error){
+      console.log("Error from Add Product API: " + error)
     }
 }
 
