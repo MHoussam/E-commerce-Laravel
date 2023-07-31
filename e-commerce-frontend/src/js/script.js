@@ -176,6 +176,11 @@ pages.displayProducts = async () => {
       <div class="product-price flex center">        
         <div class="price bold" id="price">$` + product.price + `</div>
       </div>
+
+      <div class="show-info">
+        <p>Product 1 Description</p>
+        <p>Rating: 4.5 / 5</p>
+      </div>
     </div>
     `;
     productsList.appendChild(listItem)

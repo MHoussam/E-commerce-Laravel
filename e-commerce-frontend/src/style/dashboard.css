@@ -64,6 +64,7 @@ body {
     border: 3px solid rgb(207, 117, 32);
     border-radius: 10px;
     text-decoration: none;
+    position: relative;
 }
 
 .product-pic {
@@ -139,3 +140,17 @@ body {
     margin-left: 2%;
     margin-right: 2%;
 }
+
+.show-info {
+    display: none;
+    position: absolute;
+    top: 30%; 
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .product:hover .show-info {
+    display: block;
+  }
