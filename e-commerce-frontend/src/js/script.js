@@ -7,28 +7,28 @@ pages.loadFor = (page) => {
 }
 
 pages.goTo = (page) =>{
-  document.getElementById(page).addEventListener("click", async (event) => {
+  document.getElementById(page).addEventListener("click", async () => {
     window.location.href = "./" + page + ".html";
   });
 }
 
 pages.page_index = async () => {
-    document.getElementById("login").addEventListener("click", async (event) => {
-      const index_url = pages.base_url + "login/"
-      await pages.login(index_url, event)
-    });
+  document.getElementById("login").addEventListener("click", async () => {
+    const index_url = pages.base_url + "login/"
+    await pages.login(index_url)
+  });
 }
 
 pages.page_register = async () => {
-  document.getElementById("register").addEventListener("click", async (event) => {
+  document.getElementById("register").addEventListener("click", async () => {
     const register_url = pages.base_url + "register"
-    await pages.register(register_url, event)    
+    await pages.register(register_url)    
   });
 }
 
 pages.page_dashboard = async () => {
-          const dashboard_url = pages.base_url + "dashboard"
-          const response = await pages.dashboard(dashboard_url)
+  const dashboard_url = pages.base_url + "dashboard"
+  await pages.dashboard(dashboard_url)
 
   pages.goTo('favorite')
   pages.goTo('cart')
@@ -53,7 +53,13 @@ pages.page_cart = async () => {
 pages.page_product = async () => {
   const product_url = pages.base_url + "product/" + localStorage.getItem('chosen_product')
   await pages.product(product_url)
+
+  document.getElementById("favorite-btn").addEventListener("click", async () => {
+    const favorite_url = pages.base_url + "add_favorite"
+    await pages.addFavorite(favorite_url)    
+  });
         
+  pages.goTo('dashboard')
   pages.goTo('favorite')
   pages.goTo('cart')
 }
@@ -216,13 +222,13 @@ pages.displayProduct = async () => {
 
         <div class="content-right-down flex center">
           <div class="show flex center">
-            <button id="favorite" class="show-btn bold pointer center content-btn">
+            <button id="favorite-btn" class="show-btn bold pointer center content-btn">
                 Favorite List
             </button>
           </div>
 
           <div class="show flex center">
-            <button id="cart" class="show-btn bold pointer center content-btn">
+            <button id="cart-btn" class="show-btn bold pointer center content-btn">
               My Cart
             </button>
           </div>
@@ -238,4 +244,23 @@ pages.chooseProduct = (product_id) => {
   console.log(product_id)
   localStorage.setItem('chosen_product', product_id)
   window.location.href = './product.html'
+}
+
+pages.addFavorite = async (url) => {
+  const id = localStorage.getItem('id');
+  const product_id = localStorage.getItem('chosen_product');
+  
+  try{
+    const productData = {
+      user_id: id,
+      product_id: product_id
+    };
+
+    response = await axios.post(
+      url,
+      productData
+    )
+  }catch(error){
+    console.log("Error from Add Favorite API: " + error)
+  }
 }

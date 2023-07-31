@@ -83,15 +83,24 @@ body {
     width: 80%;    
 }
 
+.header-buttons {
+    column-gap: 10px;
+}
+
+.third {
+    width: 33.33%;
+}
+
 .show {
-    align-items: center;    
-    width: 50%;
-    
+    align-items: center;     
+    width: 50%;   
     justify-content: flex-end;
 }
 
 .show-btn {
     padding: 1%;
+    width: 100%; 
+    height: 50%;
     justify-content: flex-end;
 }
 
@@ -125,6 +134,7 @@ body {
 
 .content-btn {
     width: 100%;
+    height: 70%;
     padding: 5% 0;
     margin-left: 2%;
     margin-right: 2%;

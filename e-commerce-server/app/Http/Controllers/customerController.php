@@ -88,4 +88,32 @@ class customerController extends Controller
 
         return json_encode($products);
     }
+
+    function addFavorite(Request $request) {
+        $favorites = Favorite::where('product_id', $request->product_id)->first();
+
+        if(is_null($favorites)){
+            $favorites = new Favorite;
+
+            $favorites->user_id = $request->user_id;
+            $favorites->product_id = $request->product_id;
+            $favorites->save();
+            
+            return json_encode([$favorites]);
+        }
+    }
+
+    function addCart(Request $request) {
+        $carts = Cart::where('product_id', $request->product_id)->first();
+
+        if(is_null($carts)){
+            $carts = new Cart;
+
+            $carts->user_id = $request->user_id;
+            $carts->product_id = $request->product_id;
+            $carts->save();
+            
+            return json_encode([$carts]);
+        }
+    }
 }
