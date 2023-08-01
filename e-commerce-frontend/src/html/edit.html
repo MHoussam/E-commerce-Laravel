@@ -5,16 +5,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" href="../style/index.css" rel="stylesheet">
+        <link type="text/css" href="../style/dashboard.css" rel="stylesheet">
         <title>Edit Product</title>
     </head>
 
     <body>
         <div class="login">
-            <div class="login-title">
-                <h2 id="title">Edit Product</h2>
+            <div class="header flex center">
+                <div class="title flex center">
+                    <div class="logout flex align-center">
+                        <button id="logout" class="logout-btn bold pointer">
+                            Logout
+                        </button>
+                    </div>
+
+                    <h1 id="products-title" class="products-title flex center">
+                        Edit Product
+                    </h1>
+                </div>
+
+                <div class="header-buttons flex">
+                    <div class="show flex">
+                        <button id="admin-dashboard" class="show-btn bold pointer">
+                            View Products
+                        </button>
+                    </div>
+                </div>
             </div>
-                
-            <hr>
                 
             <div class="login-form" id="edit-form">
             </div>

@@ -1,3 +1,47 @@
 .pointer {
     cursor: pointer;
 }
+
+.full-width {
+    width: 100%;
+}
+
+.flex-end {
+    justify-content: flex-end;
+    background-color: rgb(122, 163, 252);
+}
+
+.center {
+    justify-content: center;
+}
+
+.login-form, .add-form {
+    width: 40%;
+    margin-top: 5%;
+    margin-left: 30%;
+    border: 2px solid rgb(143, 138, 138);
+    border-radius: 5px;
+}
+
+.add-form {
+    margin-top: 2%;
+}
+
+.info-form {
+    width: 100%;
+    border-radius: 5px;
+    padding-bottom: 2%;
+}
+
+.login-title {
+    border-bottom: 2px solid rgb(143, 138, 138);
+}
+
+.email-input, .password-input {
+    width: 45%;
+}
+
+.login-btn {
+    width: 30%;
+    padding: 1% 0;
+}

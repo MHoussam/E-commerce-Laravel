@@ -5,37 +5,60 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" href="./src/style/index.css" rel="stylesheet">
+        <link type="text/css" href="./src/style/dashboard.css" rel="stylesheet">
         <title>Login</title>
     </head>
 
     <body>
-        <div class="login">
-            <div class="login-title">
-                <h2 id="title">Login</h2>
+        <div class="product-display flex-column">
+        <div class="flex center full-width flex-end">
+            <div class="title flex center full-width">
+                <h1 id="products-title" class="products-title flex center">
+                    Login
+                </h1>
             </div>
-                
-            <hr>
-                
-            <div class="login-form">
-                <div class="email">
-                    <label for="">Email</label>
-                    <input type="text" class="email-input" id="email">
+
+            
+        </div>
+
+        <div class="login flex-column center">
+            <div class="login-form flex-column center">
+                <div class="login-title flex center">
+                    <h2 id="title">Login</h2>
                 </div>
+                    
+                <hr>
+                    
+                <div class="info-form flex-column center">
+                    <div class="email flex-column center">
+                        <label for="" class="flex center">Email</label>
+                        <div class="full-width flex center">
+                            <input type="text" class="email-input flex center" id="email">
+                        </div>
+                    </div>
 
-                <br>
+                    <br>
 
-                <div class="password">
-                    <label for="">Password</label>
-                    <input type="password" class="password-input" id="password">
+                    <div class="password flex-column center">
+                        <label for="" class="flex center">Password</label>
+                        <div class="full-width flex center">
+                            <input type="password" class="password-input flex center" id="password">
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="full-width flex center">
+                        <button class="login-btn" id="login">Login</button>
+                    </div>
+                    
+                    <div class="full-width flex center">
+                        <p class="create-account">If you already have an account, <a href="./src/html/register.html">register here.</a></p>
+                    </div>
                 </div>
-
-                <br>
-
-                <button class="login-btn" id="login">Login</button>
-
-                <p class="create-account">If you already have an account, <a href="./src/html/register.html">register here.</a></p>
             </div>
         </div> 
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="./src/js/script.js"></script>

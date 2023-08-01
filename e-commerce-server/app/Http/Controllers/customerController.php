@@ -66,22 +66,45 @@ class customerController extends Controller
 
         // $photoPath = $request->file('photo')->store('photos', 'public');
 
+        // $base64photo = $request->photo;
+        // $imageData = base64_encode($base64photo);
+        // $filename = uniqid() . '.jpg';
+        // $path = public_path('photos\\' . $filename);
+        // file_put_contents($path, $imageData);
+
+        // $photoPath = $request->photo->store('photos', 'public');
+
+        // $base64photo = base64_encode(file_get_contents($photoPath));
+
+        // $products->photo = 'data:' . mime_content_type($photoPath) . ';base64,' . $base64photo;
+
+
         $products->name = $request->name;
         $products->description = $request->description;
         $products->price = $request->price;
         $products->quantity = $request->quantity;
         $products->category = $request->category;
-        //$products->photo = $photoPath;
+        //$products->photo = $request->photo;
         $products->save();
 
         $status=1;
-        
         return json_encode([$status, $products]);
     }
 
     function dashboard() {
         $products = Product::all();
         
+        // $modifiedProducts = $products->map(function ($product) {
+        //     // $imagePath = $product->photo; // This is the base64 encoded image path from the database
+        //     // $product->photo = substr($imagePath, strpos($imagePath, ',') + 1);
+
+        //     $imagePath = $product->photo; // This is the image path (file path or URL) from the database
+        //     $imageData = base64_decode($imagePath); // Encode the image data as base64
+        //     $product->photo =  $imageData;
+
+        //     return $product;
+        // });
+
         return json_encode($products);
     }
 

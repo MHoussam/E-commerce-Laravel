@@ -4,57 +4,82 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link type="text/css text/html" href="./src/style/register.css" rel="stylesheet">
+        <link type="text/css" href="../style/index.css" rel="stylesheet">
+        <link type="text/css" href="../style/dashboard.css" rel="stylesheet">
         <title>Registration</title>
     </head>
 
     <body>
-        <div class="register">
-            <div class="register-title">
-                <h2 id="title">Registration</h2>
+        <div class="product-display flex-column">
+            <div class="flex center full-width flex-end">
+                <div class="title flex center full-width">
+                    <h1 id="products-title" class="products-title flex center">
+                        Registration
+                    </h1>
+                </div>
             </div>
-                
-            <hr>
-                
-            <div class="registration-form">
-                <div class="fname">
-                    <label for="">First Name</label>
-                    <input type="text" class="fname-input" id="first_name">
+
+            <div class="login flex-column center">
+                <div class="login-form flex-column center">
+                    <div class="login-title flex center">
+                        <h2 id="title">Registration</h2>
+                    </div>
+                        
+                    <hr>
+                        
+                    <div class="info-form flex-column center">
+                        <div class="email flex-column center">
+                            <label for="" class="flex center">First Name</label>
+                            <div class="full-width flex center">
+                                <input type="text" class="email-input flex center" id="first_name">
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="email flex-column center">
+                            <label for="" class="flex center">Last Name</label>
+                            <div class="full-width flex center">
+                                <input type="text" class="email-input flex center" id="last_name">
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="email flex-column center">
+                            <label for="" class="flex center">Email</label>
+                            <div class="full-width flex center">
+                                <input type="text" class="email-input flex center" id="email">
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="password flex-column center">
+                            <label for="" class="flex center">Password</label>
+                            <div class="full-width flex center">
+                                <input type="password" class="password-input flex center" id="password">
+                            </div>
+                        </div>
+
+                        <br><br>
+
+                        <div class="full-width flex center">
+                            <button class="login-btn" id="register">Sign-Up</button>
+                        </div>
+                        
+                        <div class="full-width flex center">
+                            <p class="create-account">If you already have an account, <a href="../../index.html">login here.</a></p>
+                        </div>
+                    </div>
                 </div>
-
-                <br>
-
-                <div class="lname">
-                    <label for="">Last Name</label>
-                    <input type="text" class="lname-input" id="last_name">
-                </div>
-
-                <br>
-
-                <div class="email">
-                    <label for="">Email</label>
-                    <input type="text" class="email-input" id="email">
-                </div>
-
-                <br>
-
-                <div class="password">
-                    <label for="">Password</label>
-                    <input type="password" class="password-input" id="password">
-                </div>
-
-                <br>
-
-                <button class="login-btn" id="register">Sign-Up</button>
-
-                <p class="create-account">If you already have an account, <a href="../../index.html">login here.</a></p>
-            </div>
+            </div> 
         </div>
-        
+
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="../js/script.js"></script>
         <script>
             pages.loadFor("register")
-        </script>  
+        </script>    
     </body>
 </html>

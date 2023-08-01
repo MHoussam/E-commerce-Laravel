@@ -32,6 +32,13 @@ pages.deleteP = async () => {
   //});
 }
 
+// pages.logout = async () => {
+//   document.getElementById('logout').addEventListener("click", async () => {
+//     const url = pages.base_url + 'logout'
+//     await pages.logoutPage(url)    
+//   });
+// }
+
 pages.editProduct = () => {
   document.getElementById('edit-btn').addEventListener("click", async () => {
     const url = pages.base_url + 'edit'
@@ -58,6 +65,9 @@ pages.page_add = async () => {
     const add_url = pages.base_url + "add"
     await pages.addProduct(add_url)    
   });
+
+  pages.goTo('logout')
+  pages.goTo('admin-dashboard')
 }
 
 pages.page_dashboard = async () => {
@@ -125,15 +135,17 @@ pages.page_edit = async () => {
   await pages.editProducts(dashboard_url)
 
   pages.editProduct('edit-btn', 'edit')
+  pages.goTo('logout')
+  pages.goTo('admin-dashboard')
 }
 
 pages.login = async (url) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    localStorage.setItem('id', null);
-    localStorage.setItem('first_name', null);
-    localStorage.setItem('status', 1);
+    //localStorage.setItem('id', null);
+    //localStorage.setItem('first_name', null);
+    //localStorage.setItem('status', 1);
 
     const userData = {
       email: email,
@@ -146,12 +158,12 @@ pages.login = async (url) => {
         
         console.log('aaaa: ' + response.data[0])
         
-        if(response.data[0] != 0) {
-          localStorage.setItem('id', response.data[1].id);
-          localStorage.setItem('first_name', response.data[1].first_name);
+        if(response.data['status'] === 'success') {
+          localStorage.setItem('id', response.data['user'].id);
+          localStorage.setItem('first_name', response.data['user'].first_name);
           
-          console.log(response.data[1].first_name)
-          if(response.data[1].type !== 'admin') {
+          console.log(response.data['user'].first_name)
+          if(response.data['user'].type !== 'admin') {
             window.location.href = "./src/html/dashboard.html";
           }
           else {
@@ -213,16 +225,34 @@ pages.addProduct = async (url) => {
   const price = document.getElementById("price").value;
   const quantity = document.getElementById("quantity").value;
   const category = document.getElementById("category").value;
+  //const photo = document.getElementById("photo");
 
     try{
-      //console.log('whatttt')
+      // const photoFile = photo.files[0];
+      // const photoBase64 = await convertToBase64(photoFile);
+
+//console.log('here; ' + photoBase64)
+
+      //const photoFile = photo.files[0]; // Get the selected file
+      //if (photoFile) {
+        //const imagePath = URL.createObjectURL(photoFile);
+        //console.log("Image path:", imagePath);
+
+        // Display the image preview
+        //const previewImage = document.getElementById("preview");
+        //previewImage.src = imagePath;
+      // } else {
+      //   console.log("No image selected.");
+      // }
+    //const photoBase64 = await convertToBase64(photoFile);
 
       const userData = {
         name: name,
         description: description,
         price: price,
         quantity: quantity,
-        category: category
+        category: category,
+        //photo: photoBase64
       };
 
       console.log(url)
@@ -244,6 +274,22 @@ pages.addProduct = async (url) => {
     }catch(error){
       console.log("Error from Add Product API: " + error)
     }
+}
+
+async function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+          resolve(event.target.result);
+      };
+
+      reader.onerror = (error) => {
+          reject(error);
+      };
+
+      reader.readAsDataURL(file);
+  });
 }
 
 pages.dashboard = async (url) => {
@@ -278,7 +324,7 @@ pages.displayProducts = async () => {
         </div>
 
         <div class="product-content flex center">
-            <img src="../assets/images/1.jpg" type="image/jpg" class="pic">
+            <img src="${product.photo}" type="image/jpg" id='productPic' class="pic">
         </div>
 
         <div class="product-price flex center">        
@@ -294,6 +340,8 @@ pages.displayProducts = async () => {
       </div
     </div>
     `;
+//blob:null/d74cbc59-030d-4837-a6eb-68db7b34813d
+    //document.getElementById('productPic').src = product.photo
     productsList.appendChild(listItem)
   })
 }
@@ -526,42 +574,56 @@ pages.displayEditProducts = async () => {
     const listItem = document.createElement("div");
     console.log(productsArray.name)
     productsList.innerHTML += `
-    <div class="email">
-      <label for="">Name</label>
-      <input type="text" class="email-input" id="name" value="${productsArray.name}">
+    <br>
+    <div class="email flex-column center">
+      <label for="" class="flex center">Name</label>
+      <div class="full-width flex center">
+        <input type="text" class="email-input flex center" id="name" value="${productsArray.name}">
+      </div>
     </div>
 
     <br>
 
-    <div class="password">
-      <label for="">Description</label>
-      <input type="text" class="password-input" id="description" value="${productsArray.description}">
+    <div class="email flex-column center">
+      <label for="" class="flex center">Description</label>
+      <div class="full-width flex center">
+        <input type="text" class="password-input" id="description" value="${productsArray.description}">
+      </div
     </div>
 
     <br>
 
-    <div class="email">
-      <label for="">Price</label>
-      <input type="text" class="email-input" id="price" value="${productsArray.price}">
+    <div class="email flex-column center">
+      <label for="" class="flex center">Price</label>
+      <div class="full-width flex center">
+        <input type="text" class="email-input" id="price" value="${productsArray.price}">
+      </div
     </div>
 
     <br>
 
-    <div class="password">
-      <label for="">Quantity</label>
-      <input type="text" class="password-input" id="quantity" value="${productsArray.quantity}">
+    <div class="email flex-column center">
+      <label for="" class="flex center">Quantity</label>
+      <div class="full-width flex center">
+        <input type="text" class="password-input" id="quantity" value="${productsArray.quantity}">
+      </div
     </div>
 
     <br>
 
-    <div class="password">
-      <label for="">Category</label>
-      <input type="text" class="password-input" id="category" value="${productsArray.category}">
+    <div class="email flex-column center">
+      <label for="" class="flex center">Category</label>
+      <div class="full-width flex center">
+        <input type="text" class="password-input" id="category" value="${productsArray.category}">
+      </div
     </div>
 
     <br>
 
-    <button class="login-btn pointer" id="edit-btn">Edit</button>
+    <div class="full-width flex center">
+      <button class="login-btn pointer" id="edit-btn">Edit</button>
+    </div>
+    <br>
     `;
     productsList.appendChild(listItem)
 }
@@ -608,6 +670,24 @@ pages.add = async (url) => {
     window.location.href = './dashboard.html'
   }catch(error){
     console.log("Error from Add API: " + error)
+  }
+}
+
+pages.logoutPage = async (url) => {
+  localStorage.setItem('id', null);
+  // const product_id = localStorage.getItem('chosen_product');
+  // console.log('id: ' + id)
+  try{
+    // const productData = {
+    //   user_id: id,
+    //   product_id: product_id
+    // };
+
+    response = await axios.post(url)
+
+    window.location.href = './index.html'
+  }catch(error){
+    console.log("Error from Logout API: " + error)
   }
 }
 
@@ -658,23 +738,6 @@ pages.edit = async (url) => {
     window.location.href = './admin-dashboard.html'
   }catch(error){
     console.log("Error from Edit API: " + error)
-  }
-}
-
-pages.dashboard = async (url) => {
-  try{
-    const product = await axios(url)    
-    console.log(product.data);
-      productsArray = product.data;
-      console.log('qwas: '+product.data[0].name)
-      if(product.data.length != "0"){
-        console.log("again?")
-        pages.displayProducts()
-      } else {
-        console.log("Couldn't load the products! " + error);
-      }
-  }catch(error){
-    console.log("Error from dashboard API: " + error)
   }
 }
 

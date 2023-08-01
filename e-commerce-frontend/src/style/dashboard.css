@@ -170,8 +170,9 @@ body {
 .show-info {
     display: none;
     position: absolute;
+    width: 90%;
     top: 15%; 
-    left: 5%;
+    left: 3%;
     background-color: #fff;
     border: 1px solid #ccc;
     padding: .5% 1%;

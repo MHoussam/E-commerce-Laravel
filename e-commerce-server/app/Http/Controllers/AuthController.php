@@ -56,12 +56,16 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'type' => 'customer',
+            'remember_token' => 'who',
         ]);
 
         $token = Auth::login($user);
+
+        $user->remember_token = $token;
+
         return response()->json([
             'status' => 'success',
-            'message' => 'User created successfully',
+            'message' => 'Uly',
             'user' => $user,
             'authorization' => [
                 'token' => $token,
@@ -73,6 +77,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+        //$token=null;
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
