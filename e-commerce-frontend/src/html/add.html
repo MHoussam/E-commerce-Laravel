@@ -1,116 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" href="../style/index.css" rel="stylesheet" />
+    <link type="text/css" href="../style/dashboard.css" rel="stylesheet" />
+    <title>Add a Product</title>
+  </head>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link type="text/css" href="../style/index.css" rel="stylesheet">
-        <link type="text/css" href="../style/dashboard.css" rel="stylesheet">
-        <title>Add a Product</title>
-    </head>
+  <body>
+    <div class="login">
+      <div class="header flex center">
+        <div class="title flex center">
+          <div class="logout flex align-center">
+            <button id="logout" class="logout-btn bold pointer">Logout</button>
+          </div>
 
-    <body>
-        <div class="login">
-            <div class="header flex center">
-                <div class="title flex center">
-                    <div class="logout flex align-center">
-                        <button id="logout" class="logout-btn bold pointer">
-                            Logout
-                        </button>
-                    </div>
+          <h1 id="products-title" class="products-title flex center">
+            Products
+          </h1>
+        </div>
 
-                    <h1 id="products-title" class="products-title flex center">
-                        Products
-                    </h1>
-                </div>
+        <div class="header-buttons flex">
+          <div class="show flex">
+            <button id="admin-dashboard" class="show-btn bold pointer">
+              View Products
+            </button>
+          </div>
+        </div>
+      </div>
 
-                <div class="header-buttons flex">
-                    <div class="show flex">
-                        <button id="admin-dashboard" class="show-btn bold pointer">
-                            View Products
-                        </button>
-                    </div>
-                </div>
+      <div class="add-form">
+        <div class="info-form flex-column center">
+          <div class="login-title flex center">
+            <h2 id="title">Add a Product</h2>
+          </div>
+
+          <hr />
+
+          <div class="email flex-column center">
+            <label for="" class="flex center">Name</label>
+            <div class="full-width flex center">
+              <input type="text" class="email-input flex center" id="name" />
             </div>
-                
-            <div class="add-form">
-                <div class="info-form flex-column center">
-                    <div class="login-title flex center">
-                        <h2 id="title">Add a Product</h2>
-                    </div>
-                        
-                    <hr>
+          </div>
 
-                    <div class="email flex-column center">
-                        <label for="" class="flex center">Name</label>
-                        <div class="full-width flex center">
-                            <input type="text" class="email-input flex center" id="name">
-                        </div>
-                    </div>
+          <br />
 
-                    <br>
-
-                    <div class="email flex-column center">
-                        <label for="" class="flex center">Description</label>
-                        <div class="full-width flex center">
-                            <input type="text" class="email-input flex center" id="description">
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <div class="email flex-column center">
-                        <label for="" class="flex center">Price</label>
-                        <div class="full-width flex center">
-                            <input type="text" class="email-input flex center" id="price">
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <div class="password flex-column center">
-                        <label for="" class="flex center">Quantity</label>
-                        <div class="full-width flex center">
-                            <input type="text" class="password-input flex center" id="quantity">
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <div class="password flex-column center">
-                        <label for="" class="flex center">Category</label>
-                        <div class="full-width flex center">
-                            <input type="text" class="password-input flex center" id="category">
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <form action="/upload" method="post" enctype="multipart/form-data" class="password flex-column center">
-                        <!-- @csrf -->
-                        <div class="full-width flex center">
-                            <input type="file" name="photo" id="photo">
-                        </div>
-                        <!-- <button type="submit">Submit</button> -->
-
-                        <img id="preview" src="#" alt="Preview" style="max-width: 300px; max-height: 300px;">
-                    </form>
-                    
-                    <br>
-
-                    <div class="full-width flex center">
-                        <button class="login-btn" id="add">Add</button>
-                    </div>
-                </div>
+          <div class="email flex-column center">
+            <label for="" class="flex center">Description</label>
+            <div class="full-width flex center">
+              <input
+                type="text"
+                class="email-input flex center"
+                id="description"
+              />
             </div>
+          </div>
 
-            <img value="" height="50px" id="c">
-        </div> 
+          <br />
 
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="../js/script.js"></script>
-        <script>
-            pages.loadFor("add")
-        </script>    
-    </body>
+          <div class="email flex-column center">
+            <label for="" class="flex center">Price</label>
+            <div class="full-width flex center">
+              <input type="text" class="email-input flex center" id="price" />
+            </div>
+          </div>
+
+          <br />
+
+          <div class="password flex-column center">
+            <label for="" class="flex center">Quantity</label>
+            <div class="full-width flex center">
+              <input
+                type="text"
+                class="password-input flex center"
+                id="quantity"
+              />
+            </div>
+          </div>
+
+          <br />
+
+          <div class="password flex-column center">
+            <label for="" class="flex center">Category</label>
+            <div class="full-width flex center">
+              <input
+                type="text"
+                class="password-input flex center"
+                id="category"
+              />
+            </div>
+          </div>
+
+          <br />
+
+          <form action="/upload" method="post" accept="image/*" class="password flex-column center"s>
+            <!-- @csrf -->
+            <div class="full-width flex center">
+              <input type="file" name="photo" id="photo" />
+            </div>
+            <!-- <button type="submit">Submit</button> -->
+          </form>
+
+          <br />
+
+          <div class="full-width flex center">
+            <button class="login-btn pointer" id="add">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+      pages.loadFor("add");
+    </script>
+  </body>
 </html>
