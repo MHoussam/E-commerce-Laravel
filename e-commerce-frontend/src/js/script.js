@@ -143,7 +143,7 @@ pages.login = async (url) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    //localStorage.setItem('id', null);
+    localStorage.setItem('id', null);
     //localStorage.setItem('first_name', null);
     //localStorage.setItem('status', 1);
 
@@ -300,7 +300,9 @@ pages.dashboard = async (url) => {
       console.log('qwas: '+product.data[0].name)
       if(product.data.length != "0"){
         console.log("again?")
-        pages.displayProducts()
+        if(localStorage.getItem('id') !== 'null') {
+          pages.displayProducts()
+        }
       } else {
         console.log("Couldn't load the products! " + error);
       }
@@ -354,7 +356,9 @@ pages.product = async (url) => {
       console.log('qwas: '+productsArray.name)
       if(productsArray.length != "0"){
         console.log("again?")
-        pages.displayProduct()
+        if(localStorage.getItem('id') !== 'null') {
+          pages.displayProduct()
+        }
       } else {
         console.log("Couldn't load the products! " + error);
       }
@@ -421,7 +425,9 @@ pages.adminProduct = async (url) => {
       console.log('qwas: '+productsArray.name)
       if(productsArray.length != "0"){
         console.log("again?")
-        pages.displayChosenAdminProduct()
+        if(localStorage.getItem('id') !== 'null') {
+          pages.displayChosenAdminProduct()
+        }
       } else {
         console.log("Couldn't load the products! " + error);
       }
@@ -488,7 +494,9 @@ pages.adminDashboard = async (url) => {
       console.log('qwas: '+product.data[0].name)
       if(product.data.length != "0"){
         console.log("again?")
-        pages.displayAdminProducts()
+        if(localStorage.getItem('id') !== 'null') {
+          pages.displayAdminProducts()
+        }
       } else {
         console.log("Couldn't load the products! " + error);
       }
@@ -558,7 +566,9 @@ pages.editProducts = async (url) => {
 
       if(product.data.length != "0"){
         console.log("again?")
-        pages.displayEditProducts()
+        if(localStorage.getItem('id') !== 'null') {
+          pages.displayEditProducts()
+        }
       } else {
         console.log("Couldn't load the products! " + error);
       }
@@ -752,7 +762,9 @@ pages.fav_cart = async (url) => {
       console.log('qwas: '+product.data[0].name)
       if(product.data.length != "0"){
         console.log("again?")
-        pages.displayProducts()
+        if(localStorage.getItem('id') !== 'null') {
+          pages.displayProducts()
+        }
       } else {
         console.log("Couldn't load the products! " + error);
       }
