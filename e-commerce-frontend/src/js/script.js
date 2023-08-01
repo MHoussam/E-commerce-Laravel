@@ -26,18 +26,9 @@ pages.addTo = (button, func) => {
 };
 
 pages.deleteP = async () => {
-  //document.getElementById('delete').addEventListener("click", async () => {
   const url = pages.base_url + "delete";
   await pages.delete(url);
-  //});
 };
-
-// pages.logout = async () => {
-//   document.getElementById('logout').addEventListener("click", async () => {
-//     const url = pages.base_url + 'logout'
-//     await pages.logoutPage(url)
-//   });
-// }
 
 pages.editProduct = () => {
   document.getElementById("edit-btn").addEventListener("click", async () => {
@@ -83,8 +74,6 @@ pages.page_admin = async () => {
   const dashboard_url = pages.base_url + "dashboard";
   await pages.adminDashboard(dashboard_url);
 
-  //pages.deleteP('delete')
-  //pages.goTo('edit')
   pages.goTo("logout");
   pages.goTo("add");
 };
@@ -147,8 +136,6 @@ pages.login = async (url) => {
   const password = document.getElementById("password").value;
 
   localStorage.setItem("id", null);
-  //localStorage.setItem('first_name', null);
-  //localStorage.setItem('status', 1);
 
   const userData = {
     email: email,
@@ -157,13 +144,10 @@ pages.login = async (url) => {
   try {
     response = await axios.post(url, userData);
 
-    console.log("aaaa: " + response.data[0]);
-
     if (response.data["status"] === "success") {
       localStorage.setItem("id", response.data["user"].id);
       localStorage.setItem("first_name", response.data["user"].first_name);
 
-      console.log(response.data["user"].first_name);
       if (response.data["user"].type !== "admin") {
         window.location.href = "./src/html/dashboard.html";
       } else {
@@ -188,8 +172,6 @@ pages.register = async (url) => {
   localStorage.setItem("status", 1);
 
   try {
-    console.log("whatttt");
-
     const userData = {
       first_name: first_name,
       last_name: last_name,
@@ -197,15 +179,10 @@ pages.register = async (url) => {
       password: password,
     };
 
-    console.log(url);
     response = await axios.post(url, userData).then((response) => {
-      console.log(response.data);
-
-      console.log("aaaa: " + response.data["status"]);
       if (response.data["status"] === "success") {
         localStorage.setItem("id", response.data["user"].id);
         localStorage.setItem("first_name", response.data["user"].first_name);
-        console.log(response.data["user"].first_name);
         window.location.href = "./dashboard.html";
       } else {
         console.log("Fill all the inputs!");
@@ -246,11 +223,7 @@ pages.addProduct = async (url) => {
      if (photoFile) {
       encodeFileToBase64(photoFile)
         .then((base64String) => {
-          // Now you have the base64-encoded string, you can send it to the server.
           console.log(base64String);
-  
-          // You can now send the base64String to your Laravel backend using an HTTP request.
-          // In your Laravel controller, you can decode the base64String and save it in the database.
         })
         .catch((error) => {
           console.error("Error encoding file:", error);
@@ -258,22 +231,6 @@ pages.addProduct = async (url) => {
     } else {
       console.log("No file selected");
     }
-    // const photoBase64 = await convertToBase64(photoFile);
-
-    //console.log('here; ' + photoBase64)
-
-    //const photoFile = photo.files[0]; // Get the selected file
-    //if (photoFile) {
-    //const imagePath = URL.createObjectURL(photoFile);
-    //console.log("Image path:", imagePath);
-
-    // Display the image preview
-    //const previewImage = document.getElementById("preview");
-    //previewImage.src = imagePath;
-    // } else {
-    //   console.log("No image selected.");
-    // }
-    //const photoBase64 = await convertToBase64(photoFile);
 
     const userData = {
       name: name,
@@ -283,17 +240,12 @@ pages.addProduct = async (url) => {
       category: category,
       photo: photoFile,
     };
-    console.log(photoFile);
-    console.log(url);
     response = await axios.post(url, userData).then((response) => {
-      //console.log(response.data);
-
-      //console.log("aaaa: " + response.data[0]);
       console.log(response.data[0]);
       if (response.data[0] != 0) {
         console.log("Succeeded");
 
-        //window.location.href = "./admin-dashboard.html";
+        window.location.href = "./admin-dashboard.html";
       } else {
         console.log("Fill all the inputs!");
       }
@@ -322,11 +274,8 @@ async function convertToBase64(file) {
 pages.dashboard = async (url) => {
   try {
     const product = await axios(url);
-    console.log(product.data);
     productsArray = product.data;
-    console.log("qwas: " + product.data[0].name);
     if (product.data.length != "0") {
-      console.log("again?");
       if (localStorage.getItem("id") !== "null") {
         pages.displayProducts();
       }
@@ -341,10 +290,8 @@ pages.dashboard = async (url) => {
 pages.displayProducts = async () => {
   const productsList = document.getElementById("product-cards");
   productsList.innerHTML = "";
-  console.log("p: " + productsArray);
   productsArray.forEach((product) => {
     const listItem = document.createElement("div");
-    console.log(product.name);
     listItem.innerHTML =
       `
     <div class="product flex-column pointer" onclick="pages.chooseProduct(${product.id})">
@@ -382,8 +329,7 @@ pages.displayProducts = async () => {
       </div
     </div>
     `;
-    //blob:null/d74cbc59-030d-4837-a6eb-68db7b34813d
-    //document.getElementById('productPic').src = product.photo
+    
     productsList.appendChild(listItem);
   });
 };
@@ -391,11 +337,8 @@ pages.displayProducts = async () => {
 pages.product = async (url) => {
   try {
     const product = await axios(url);
-    console.log(product.data);
     productsArray = product.data;
-    console.log("qwas: " + productsArray.name);
     if (productsArray.length != "0") {
-      console.log("again?");
       if (localStorage.getItem("id") !== "null") {
         pages.displayProduct();
       }
@@ -411,7 +354,6 @@ pages.displayProduct = async () => {
   const productsList = document.getElementById("product-cards");
   productsList.innerHTML = "";
   const listItem = document.createElement("div");
-  console.log(productsArray.name);
   listItem.innerHTML =
     `
     <div class="product-chosen flex">
@@ -469,11 +411,8 @@ pages.displayProduct = async () => {
 pages.adminProduct = async (url) => {
   try {
     const product = await axios(url);
-    console.log(product.data);
     productsArray = product.data;
-    console.log("qwas: " + productsArray.name);
     if (productsArray.length != "0") {
-      console.log("again?");
       if (localStorage.getItem("id") !== "null") {
         pages.displayChosenAdminProduct();
       }
@@ -489,7 +428,6 @@ pages.displayChosenAdminProduct = async () => {
   const productsList = document.getElementById("product-cards");
   productsList.innerHTML = "";
   const listItem = document.createElement("div");
-  console.log(productsArray.name);
   listItem.innerHTML =
     `
     <div class="product-chosen flex">
@@ -547,11 +485,8 @@ pages.displayChosenAdminProduct = async () => {
 pages.adminDashboard = async (url) => {
   try {
     const product = await axios(url);
-    console.log(product.data);
     productsArray = product.data;
-    console.log("qwas: " + product.data[0].name);
     if (product.data.length != "0") {
-      console.log("again?");
       if (localStorage.getItem("id") !== "null") {
         pages.displayAdminProducts();
       }
@@ -566,10 +501,8 @@ pages.adminDashboard = async (url) => {
 pages.displayAdminProducts = async () => {
   const productsList = document.getElementById("product-list");
   productsList.innerHTML = "";
-  console.log("p: " + productsArray);
   productsArray.forEach((product) => {
     const listItem = document.createElement("li");
-    console.log(product.name);
     listItem.innerHTML =
       `
     <div class="product flex-column pointer">
@@ -628,15 +561,8 @@ pages.displayAdminProducts = async () => {
 pages.editProducts = async (url) => {
   try {
     const product = await axios(url);
-
-    console.log(product.data);
-
     productsArray = product.data;
-
-    console.log("qwas: " + product.data.name);
-
     if (product.data.length != "0") {
-      console.log("again?");
       if (localStorage.getItem("id") !== "null") {
         pages.displayEditProducts();
       }
@@ -650,10 +576,7 @@ pages.editProducts = async (url) => {
 
 pages.displayEditProducts = async () => {
   const productsList = document.getElementById("edit-form");
-
-  console.log("p: " + productsArray.name);
   const listItem = document.createElement("div");
-  console.log(productsArray.name);
   productsList.innerHTML += `
     <br>
     <div class="email flex-column center">
@@ -710,25 +633,21 @@ pages.displayEditProducts = async () => {
 };
 
 pages.chooseProduct = (product_id) => {
-  console.log(product_id);
   localStorage.setItem("chosen_product", product_id);
   window.location.href = "./product.html";
 };
 
 pages.chooseAdminProduct = (product_id) => {
-  console.log(product_id);
   localStorage.setItem("chosen_product", product_id);
   window.location.href = "./adminProduct.html";
 };
 
 pages.editPro = (product_id) => {
-  console.log(product_id);
   localStorage.setItem("chosen_product", product_id);
   window.location.href = "./edit.html";
 };
 
 pages.deleteProduct = (product_id) => {
-  console.log(product_id);
   localStorage.setItem("chosen_product", product_id);
   pages.deleteP();
 };
@@ -736,7 +655,6 @@ pages.deleteProduct = (product_id) => {
 pages.add = async (url) => {
   const id = localStorage.getItem("id");
   const product_id = localStorage.getItem("chosen_product");
-  console.log("id: " + id);
   try {
     const productData = {
       user_id: id,
@@ -753,14 +671,7 @@ pages.add = async (url) => {
 
 pages.logoutPage = async (url) => {
   localStorage.setItem("id", null);
-  // const product_id = localStorage.getItem('chosen_product');
-  // console.log('id: ' + id)
   try {
-    // const productData = {
-    //   user_id: id,
-    //   product_id: product_id
-    // };
-
     response = await axios.post(url);
 
     window.location.href = "./index.html";
@@ -771,7 +682,6 @@ pages.logoutPage = async (url) => {
 
 pages.delete = async (url) => {
   const product_id = localStorage.getItem("chosen_product");
-  console.log("product_id: " + product_id);
   try {
     const productData = {
       product_id: product_id,
@@ -792,8 +702,6 @@ pages.edit = async (url) => {
   const quantity = document.getElementById("quantity").value;
   const category = document.getElementById("category").value;
   const product_id = localStorage.getItem("chosen_product");
-
-  console.log("product_id: " + product_id);
 
   try {
     const productData = {
@@ -819,11 +727,8 @@ pages.fav_cart = async (url) => {
 
   try {
     const product = await axios(url);
-    console.log(product.data);
     productsArray = product.data;
-    console.log("qwas: " + product.data[0].name);
     if (product.data.length != "0") {
-      console.log("again?");
       if (localStorage.getItem("id") !== "null") {
         pages.displayProducts();
       }
